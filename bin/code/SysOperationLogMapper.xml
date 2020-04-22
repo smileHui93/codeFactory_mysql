@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sqlserver.dao..ISysOperationLogDao">
+	<resultMap type="com.entity..SysOperationLog" id="SysOperationLogResult">
+		
+	</resultMap>
+	
+	<select id="getById" resultMap="SysOperationLogResult">
+		select 
+			*
+		from
+			SYS_OPERATION_LOG
+		where
+			ID = #{id}
+	</select>
+	
+	<sql id="whereConditions">
+	</sql>
+	
+	<select id="queryMap" resultMap="SysOperationLogResult">
+		SELECT
+			*
+		from
+			SYS_OPERATION_LOG
+		where
+			1=1
+		<include refid="whereConditions"/>
+		order by ID desc
+		<if test="size != null and size !=''">limit  #{start}, #{size}</if>
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		select
+			count(1)
+		from
+			SYS_OPERATION_LOG
+		where
+		1=1
+		<include refid="whereConditions" />
+	</select>
+	
+	<insert id="add" parameterType="com.entity..SysOperationLog" keyProperty="id" keyColumn="ID" useGeneratedKeys="true">
+		insert into SYS_OPERATION_LOG
+		<trim prefix="(" suffixOverrides="," suffix = ")">
+		</trim>
+		values
+		<trim prefix="(" suffixOverrides="," suffix = ")">
+		</trim>
+	</insert> 
+	
+	<update id="edit" parameterType="com.entity..SysOperationLog">
+		update SYS_OPERATION_LOG
+		<trim prefix="set" suffixOverrides=",">
+		</trim>
+		where
+			ID = #{id}
+	</update>
+	
+	<delete id="batchDelete">
+		delete from SYS_OPERATION_LOG
+		where 
+			ID in #{ids}
+	</delete>
+</mapper>

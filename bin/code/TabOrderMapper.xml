@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sqlserver.dao..ITabOrderDao">
+	<resultMap type="com.entity..TabOrder" id="TabOrderResult">
+       	<result column="id" property="id"/>
+       	<result column="order_id" property="orderId"/>
+       	<result column="user_id" property="userId"/>
+       	<result column="create_time" property="createTime"/>
+		
+	</resultMap>
+	
+	<select id="getById" resultMap="TabOrderResult">
+		select 
+			*
+		from
+			tab_order
+		where
+			ID = #{id}
+	</select>
+	
+	<sql id="whereConditions">
+	    <if test="queryMap.q_id != null and queryMap.q_id != ''">and id = #{queryMap.q_id}</if>
+	    <if test="queryMap.q_orderId != null and queryMap.q_orderId != ''">and order_id = #{queryMap.q_orderId}</if>
+	    <if test="queryMap.q_userId != null and queryMap.q_userId != ''">and user_id = #{queryMap.q_userId}</if>
+	    <if test="queryMap.q_createTime != null and queryMap.q_createTime != ''">and create_time = #{queryMap.q_createTime}</if>
+	</sql>
+	
+	<select id="queryMap" resultMap="TabOrderResult">
+		SELECT
+			*
+		from
+			tab_order
+		where
+			1=1
+		<include refid="whereConditions"/>
+		order by ID desc
+		<if test="size != null and size !=''">limit  #{start}, #{size}</if>
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		select
+			count(1)
+		from
+			tab_order
+		where
+		1=1
+		<include refid="whereConditions" />
+	</select>
+	
+	<insert id="add" parameterType="com.entity..TabOrder" keyProperty="id" keyColumn="ID" useGeneratedKeys="true">
+		insert into tab_order
+		<trim prefix="(" suffixOverrides="," suffix = ")">
+        	id,
+        	order_id,
+        	user_id,
+        	create_time,
+		</trim>
+		values
+		<trim prefix="(" suffixOverrides="," suffix = ")">
+        	#{id},
+        	#{orderId},
+        	#{userId},
+        	#{createTime},
+		</trim>
+	</insert> 
+	
+	<update id="edit" parameterType="com.entity..TabOrder">
+		update tab_order
+		<trim prefix="set" suffixOverrides=",">
+        	<if test="id !=null and id != ''">id = #{id},</if>
+        	<if test="orderId !=null and orderId != ''">order_id = #{orderId},</if>
+        	<if test="userId !=null and userId != ''">user_id = #{userId},</if>
+        	<if test="createTime !=null and createTime != ''">create_time = #{createTime},</if>
+		</trim>
+		where
+			ID = #{id}
+	</update>
+	
+	<delete id="batchDelete">
+		delete from tab_order
+		where 
+			ID in #{ids}
+	</delete>
+</mapper>

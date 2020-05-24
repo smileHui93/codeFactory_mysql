@@ -22,15 +22,14 @@ public class CodeGenerateUtils {
     private String changeTableName;
     private String diskPath;
 
-    private final String AUTHOR = "linhuang";
-    private final String CURRENT_DATE = "2019/09/20";
-    private final String tableName = "SYS_OPERATION_LOG";
+    private final String AUTHOR = "hui";
+    private final String tableName = "power_stations";
     private final String packageName = "com";
     private final String packageChildren = "";
-    private final String tableAnnotation = "系统用户";
+    private final String tableAnnotation = "电站";
     private final TypeMap typeMap = new TypeMap();
     
-    public static String dbName;
+    public static String dbName; //数据库名称
     
     public CodeGenerateUtils() throws IOException {
         super();
@@ -55,7 +54,8 @@ public class CodeGenerateUtils {
             Statement stmt = connection.createStatement();
             String sql = "SELECT" + 
             		"	COLUMN_NAME property," + 
-            		"	DATA_TYPE type " + 
+            		"	DATA_TYPE type, " + 
+            		"	COLUMN_COMMENT comment " + 
             		"FROM" + 
             		"	information_schema. COLUMNS " + 
             		"WHERE" + 
@@ -196,6 +196,7 @@ public class CodeGenerateUtils {
             columnClass.setChangeColumnName(replaceUnderLineAndUpperCase(resultSet.getString("property")));
             //设置实体类属性类型
             columnClass.setChangeColumnType(typeMap.get(columnType));
+            columnClass.setColumnComment(resultSet.getString("comment"));
             columnClassList.add(columnClass);
         }
         dataMap.put("model_column",columnClassList);
@@ -208,7 +209,7 @@ public class CodeGenerateUtils {
         dataMap.put("table_name_small",tableName);
         dataMap.put("table_name",changeTableName);
         dataMap.put("author",AUTHOR);
-        dataMap.put("date",CURRENT_DATE);
+        dataMap.put("date",DateUtils.getTime());
         dataMap.put("package_name",packageName);
         dataMap.put("table_annotation",tableAnnotation);
         dataMap.put("package_children", packageChildren);

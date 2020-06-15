@@ -24,7 +24,7 @@ public class CodeGenerateUtils {
 
     private final String AUTHOR = "hui";
     private final String tableName = "power_stations";
-    private final String packageName = "com";
+    private final String packageName = "org";
     private final String packageChildren = "";
     private final String tableAnnotation = "电站";
     private final TypeMap typeMap = new TypeMap();
@@ -196,6 +196,7 @@ public class CodeGenerateUtils {
             columnClass.setChangeColumnName(replaceUnderLineAndUpperCase(resultSet.getString("property")));
             //设置实体类属性类型
             columnClass.setChangeColumnType(typeMap.get(columnType));
+            //获取字段注释
             columnClass.setColumnComment(resultSet.getString("comment"));
             columnClassList.add(columnClass);
         }

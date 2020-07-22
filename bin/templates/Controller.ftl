@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
-* 描述：${table_annotation}控制层
-* @author ${author}
-* @date ${date}
+* @desc: ${table_annotation}控制层
+* @author: ${author}
+* @date: ${date}
 */
 @Controller
 @RequestMapping(value = "/")
@@ -27,35 +27,6 @@ public class ${table_name}Controller {
 
     @Resource(name = "${table_name?uncap_first}Service")
     private I${table_name}Service ${table_name?uncap_first}Service;
-
-	/**
-	 * 转发
-	 */
-	@RequestMapping(value = "/queryIndex")
-    public String queryIndex(Map<String,Object> dataMap,HttpServletRequest req) {
-        //获取以q_开头的参数集合
-        Map<String,Object> queryMap = MapUtil.proMap(req);
-        //默认每页10条
-        Integer pageSize = ConvertUtils.string2Integer(req.getParameter("pageSize"), 10);
-        Integer pageIndex = ConvertUtils.string2Integer(req.getParameter("pageIndex"), 1);
-        //结尾数
-        Integer start = (pageIndex-1)*pageSize;
-        
-        List<${table_name}> resultList = ${table_name?uncap_first}Service.queryMap(queryMap, start, pageSize);
-        Integer count = ${table_name?uncap_first}Service.count(queryMap);
-        
-        dataMap.put("resultList", resultList);
-        dataMap.put("count", count);
-        dataMap.put("index", pageIndex);
-        if(count%pageSize != 0) {
-            dataMap.put("totalPage", count/pageSize+1);
-        }else {
-            dataMap.put("totalPage", count/pageSize);
-        }
-        dataMap.put("pageSize", pageSize);
-        
-        return "";
-    }
 
 	/**
 	 * ajax异步

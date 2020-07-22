@@ -9,9 +9,9 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 /**
-* 描述：${table_annotation} 服务实现层
-* @author ${author}
-* @date ${date}
+* @desc: ${table_annotation} 服务实现层
+* @author: ${author}
+* @date: ${date}
 */
 @Service("${table_name?uncap_first}Service")
 public class ${table_name}ServiceImpl implements I${table_name}Service {

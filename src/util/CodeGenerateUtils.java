@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 import freemarker.template.Template;
 import jdbc.ColumnClass;
 import jdbc.JdbcUtil;
@@ -23,10 +26,10 @@ public class CodeGenerateUtils {
     private String diskPath;
 
     private final String AUTHOR = "hui";
-    private final String tableName = "power_stations";
-    private final String packageName = "org";
+    private final String tableName = "repairs";
+    private final String packageName = "com";
     private final String packageChildren = "";
-    private final String tableAnnotation = "电站";
+    private final String tableAnnotation = "数据补录";
     private final TypeMap typeMap = new TypeMap();
     
     public static String dbName; //数据库名称
@@ -64,15 +67,17 @@ public class CodeGenerateUtils {
             ResultSet resultSet = stmt.executeQuery(sql);
 //            DatabaseMetaData databaseMetaData = connection.getMetaData();
 //            ResultSet resultSet = databaseMetaData.getColumns(null,"%", tableName,"%");
+            
             //生成实体类文件
             generateEntityFile(resultSet);
             //生成Model文件
-            generateModelFile();
+//            generateModelFile();
             //生成Mapper文件
             resultSet = stmt.executeQuery(sql);
             generateMapperFile(resultSet);
             //生成Dao文件
             generateDaoFile();
+            
             
             //生成服务层接口文件
             generateServiceInterfaceFile();
@@ -196,8 +201,8 @@ public class CodeGenerateUtils {
             columnClass.setChangeColumnName(replaceUnderLineAndUpperCase(resultSet.getString("property")));
             //设置实体类属性类型
             columnClass.setChangeColumnType(typeMap.get(columnType));
-            //获取字段注释
-            columnClass.setColumnComment(resultSet.getString("comment"));
+            //获取字段注释 
+            columnClass.setColumnComment(resultSet.getString("comment"));         
             columnClassList.add(columnClass);
         }
         dataMap.put("model_column",columnClassList);

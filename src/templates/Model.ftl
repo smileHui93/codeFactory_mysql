@@ -8,9 +8,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 /**
-* 描述：${table_annotation}Model层
-* @author ${author}
-* @date ${date}
+* @desc:${table_annotation}Model层
+* @author: ${author}
+* @date: ${date}
 */
 @Component("${table_name?uncap_first}Model")
 public class ${table_name}Model{

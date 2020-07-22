@@ -1,16 +1,20 @@
-package ${package_name}.entity.${package_children};
+package ${package_name}.entity.${package_children}.${table_name}Entity;
 
 /**
-* 描述：${table_annotation}实体类
-* @author ${author}
-* @date ${date}
+* @desc: ${table_annotation}实体类
+* @author: ${author}
+* @date: ${date}
 */
-public class ${table_name} implements Serializable{
+@Data
+@TableName("${table_name_small}")
+public class ${table_name}Entity implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	<#if model_column??>
        <#list model_column as model>
     /** ${model.columnComment} */
 	private ${model.changeColumnType} ${model.changeColumnName?uncap_first};
+	
         </#list>
     </#if>
 	

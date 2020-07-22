@@ -6,7 +6,7 @@ import java.util.Map;
 import ${package_name}.entity.${package_children}.${table_name};
 
 /**
-* 描述：${table_annotation}服务实现层接口
+* @desc：${table_annotation}服务实现层接口
 * @author ${author}
 * @date ${date}
 */

@@ -20,5 +20,6 @@ public class TypeMap extends HashMap<String, String>{
         this.put("bit", "Boolean");
         this.put("decimal", "BigDecimal");
         this.put("varbinary", "byte[]");
+        this.put("timestamp", "Date");
     }
 }
